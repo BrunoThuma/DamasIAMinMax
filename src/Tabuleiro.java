@@ -124,37 +124,6 @@ public class Tabuleiro extends Frame {
                         qtdClick = 0;
                     }
 		}
-                
-                public EstadoDamas jogadaCPU(EstadoDamas damas){
-                    
-                    int humano = damas.getJogador() == 1 ? 2 : 1;
-                    
-                    int qntAntes = damas.contaPecas(humano, damas.getDamas());
-                    
-                    Problema p = new ProblemaDamas();
-                    p.setNodoInicial(damas);
-                    ResolvedorDeProblemas r = new ResolvedorDeProblemas();
-                    r.MINIMAX_NIVEL = nivel;
-                    Nodo nodo = r.maxInicial(p);
-                    if(nodo == null){
-                        JOptionPane.showMessageDialog(this, "Voce ganhou", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
-                        System.exit(0);
-                    }
-                    damas = (EstadoDamas) nodo.getEstado();
-
-                    Lista l = p.gerarFilhos(nodo);
-                    if(l.vazia()){
-                        JOptionPane.showMessageDialog(this, "Voce perdeu", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
-                        System.exit(0);
-                    }
-
-                    //Verifica se jogador Humano perdeu uma peca
-                    if (damas.contaPecas(humano, damas.getDamas()) < qntAntes){
-                        damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
-                        damas = jogadaCPU(damas);
-                    }
-                    return damas;
-                }
 		
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
@@ -181,7 +150,35 @@ public class Tabuleiro extends Frame {
 		}  
 	}
         
-        
+        public EstadoDamas jogadaCPU(EstadoDamas damas){
+            int humano = damas.getJogador() == 1 ? 2 : 1;
+
+            int qntAntes = damas.contaPecas(humano, damas.getDamas());
+
+            Problema p = new ProblemaDamas();
+            p.setNodoInicial(damas);
+            ResolvedorDeProblemas r = new ResolvedorDeProblemas();
+            r.MINIMAX_NIVEL = nivel;
+            Nodo nodo = r.maxInicial(p);
+            if(nodo == null){
+                JOptionPane.showMessageDialog(this, "Voce ganhou", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
+                System.exit(0);
+            }
+            damas = (EstadoDamas) nodo.getEstado();
+
+            Lista l = p.gerarFilhos(nodo);
+            if(l.vazia()){
+                JOptionPane.showMessageDialog(this, "Voce perdeu", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
+                System.exit(0);
+            }
+
+            //Verifica se jogador Humano perdeu uma peca
+            if (damas.contaPecas(humano, damas.getDamas()) < qntAntes){
+                damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
+                damas = jogadaCPU(damas);
+            }
+            return damas;
+        }
 	
 	public void atualizaTab(int[][] mat, Panel p){
         
@@ -257,11 +254,15 @@ public class Tabuleiro extends Frame {
             imgFundoPreta = ImageIO.read(getClass().getResourceAsStream("img/fundo_escuro.jpg"));
         	} catch (IOException e) {
         }
-        
-        atualizaTab(matriz, painel);
-        
+       
         this.setLayout(new BorderLayout());
         this.add(BorderLayout.CENTER, painel);
+        
+        if(this.primJogador == 1){
+            this.damas = jogadaCPU(d);
+        }
+        
+        atualizaTab(this.damas.getDamas(), painel);
         
         WindowListener listener = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
