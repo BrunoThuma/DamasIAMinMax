@@ -1,0 +1,3 @@
+Classe Main.java começa o jogo
+Tabuleiro inicial é definido na classe EstadoDamas.java metodo estadoInicial()
+Tabuleiro.java contem atributos int linhas e int colunas 
