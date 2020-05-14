@@ -248,7 +248,7 @@ public class EstadoDamas extends Estado {
 			if(this.getDama(xNovo, yNovo) != NOPECA){
 				throw new Exception("Jogada invalida, mais de uma peca consecutiva");
 			}
-//                        System.out.println("Comeu Peca");
+                        System.out.println("Comeu Peca");
 		}
 		// transforma peca em damas
 		int peca = this.getDama(x, y);
@@ -285,9 +285,8 @@ public class EstadoDamas extends Estado {
                         int[] temp = new int[2];
                         temp[0] = xNovo;
                         temp[1] = yNovo;
-                        if (novoEstado.hasPecaComerLocal(temp)){
-                            novoEstado.setComeu(temp);
-                        }
+                        if (novoEstado.hasPecaComer(temp))
+                                novoEstado.setComeu(temp);
 		}
 		return novoEstado;
 	}
@@ -397,8 +396,8 @@ public class EstadoDamas extends Estado {
 		}
 		return false;
 	}
-        public boolean hasPecaComerLocal(int[] pos){
-            int i = pos[1], j = pos[0];
+        public boolean hasPecaComer(int[] pos){
+            int i = pos[0], j = pos[1];
             if(this.isPermitido(i, j)){
                 if(this.getDama(i, j) == PECA_1 || this.getDama(i, j) == DAMA_1){
                     try{

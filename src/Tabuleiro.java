@@ -99,12 +99,10 @@ public class Tabuleiro extends Frame {
                             int[] temp = new int[2];
                             temp[0] = damas.getComeu()[0];
                             temp[1] = damas.getComeu()[1];
-                            
-                            
-                            System.out.println("Tabuleiro passa x: " + temp[0] + " y: " + temp[1]);
-                            // Verifica se jogada resultou em comer
-                            //uma peca e se ainda tem peca a ser comida
-                            if (temp[0] != -1 && damas.hasPecaComerLocal(temp)){
+                           
+                            //Verifica se jogador Humano comeu uma peca
+                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes && damas.hasPecaComer(temp)){
+                                System.out.println("msm jogador");
                                 //Coloca jogador da proximo jagada como humano
                                 damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
                             }
@@ -179,14 +177,12 @@ public class Tabuleiro extends Frame {
                 System.exit(0);
             }
                 
-            int[] temp = new int[2];
-            temp[0] = damas.getComeu()[0];
-            temp[1] = damas.getComeu()[1];
-            
-            // Verifica se jogada resultou em comer uma peca e se ainda tem peca
-            //a ser comida
-//            if (damas.contaPecas(humano, damas.getDamas()) < qntAntes){
-            if(temp[0] != -1 && damas.hasPecaComerLocal(temp)){
+//            int[] temp = new int[2];
+//            temp[0] = x;
+//            temp[1] = y;
+//                            damas.hasPecaComer(temp)
+            //Verifica se jogador Humano perdeu uma peca
+            if (damas.contaPecas(humano, damas.getDamas()) < qntAntes){
                 damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
                 damas = jogadaCPU(damas);
             }
