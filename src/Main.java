@@ -12,8 +12,6 @@ public class Main
         int primJogador = JOptionPane.showOptionDialog(null, "Quem jogara primeiro?",
                 "Escolher jogador",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, jogadores, jogadores[0]);
-        
-        System.out.println("o primeiro a jogar sera: " + primJogador);
     	EstadoDamas e = new EstadoDamas();
     	e.estadoInicial();
         Tabuleiro tab = new Tabuleiro(e.getDamas(), e, nivel, primJogador);

@@ -96,8 +96,13 @@ public class Tabuleiro extends Frame {
                             
                             damas = damas.movimento(yOld, xOld, y, x);
                             
+                            int[] temp = new int[2];
+                            temp[0] = damas.getComeu()[0];
+                            temp[1] = damas.getComeu()[1];
+                            
                             //Verifica se jogador Humano comeu uma peca
-                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes){
+                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes && damas.hasPecaComer(temp)){
+                                System.out.println("msm jogador");
                                 //Coloca jogador da proximo jagada como humano
                                 damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
                             }
@@ -171,7 +176,11 @@ public class Tabuleiro extends Frame {
                 JOptionPane.showMessageDialog(this, "Voce perdeu", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }
-
+                
+//            int[] temp = new int[2];
+//            temp[0] = x;
+//            temp[1] = y;
+//                            damas.hasPecaComer(temp)
             //Verifica se jogador Humano perdeu uma peca
             if (damas.contaPecas(humano, damas.getDamas()) < qntAntes){
                 damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
