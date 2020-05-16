@@ -101,8 +101,8 @@ public class Tabuleiro extends Frame {
                             temp[1] = damas.getComeu()[1];
                             
                             //Verifica se jogador Humano comeu uma peca
-                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes && damas.hasPecaComer(temp)){
-                                System.out.println("msm jogador");
+                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes){
+                                System.out.println("x: " + temp[0] + " y: " + temp[1]);
                                 //Coloca jogador da proximo jagada como humano
                                 damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
                             }
