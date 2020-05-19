@@ -97,32 +97,17 @@ public class Tabuleiro extends Frame {
                             
                             damas = damas.movimento(yOld, xOld, y, x);
                             
-                            int[] temp = new int[2];
-                            temp = damas.comeu;
-                            boolean fakeHasPecaComer = false;
-                            //Verifica se jogador Humano comeu uma peca
-                            System.out.println(comeu[0] + "  " + comeu[1]);
-                            if (comeu[0] == 6  && comeu[1] == 5) {
-                                fakeHasPecaComer = true;
-                            }
-                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes &&  damas.hasPecaComer(comeu)/*fakeHasPecaComer*/){
+                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes &&  damas.hasPecaComer(comeu)){
 //                                System.out.println("comeu peça" + temp[0] + "" + temp[1]);
-                                for(int i=0; i < damas.getDamas()[0].length; i++) {
-                                    System.out.println("");
-                                    for (int j = 0; j < damas.getDamas()[0].length; j++) {
-                                        System.out.print(damas.getDama(j, i));
-                                    }
-                                }
-                                
                                 //Coloca jogador da proximo jagada como humano
 //                                damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
                                   damas.setJogador(1);
                             }
                             else {
                                 //Coloca jogador da proximo jagada como ia
-                                damas = jogadaCPU(damas);
                                 Tabuleiro.comeu[0] = -1;
                                 Tabuleiro.comeu[1] = -1;
+                                damas = jogadaCPU(damas);
                             }
                             
                         } catch (Exception ex) {
