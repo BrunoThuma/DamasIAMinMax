@@ -9,6 +9,7 @@ public class EstadoDamas extends Estado {
         
 	
         public int[] comeu = new int[] {-1, -1};
+        private int[] pecaPai;
 	public static final int JOGADOR_1 = 1;
 	public static final int JOGADOR_2 = 2;
 	public static final int PECA_1 = 1;
@@ -16,9 +17,16 @@ public class EstadoDamas extends Estado {
 	public static final int DAMA_1 = 11;
 	public static final int DAMA_2 = 22;
 	public static final int NOPECA = 0;
-	
+        
 	public EstadoDamas() {
 		super();
+                this.pecaPai = new int[] {-1, -1};
+		this.estado = new int[LENGTH_X][LENGTH_Y];
+	}
+        
+        public EstadoDamas(int[] pecaPai) {
+		super();
+                this.pecaPai = pecaPai;
 		this.estado = new int[LENGTH_X][LENGTH_Y];
 	}
 
@@ -47,16 +55,16 @@ public class EstadoDamas extends Estado {
                         {PECA_2, NOPECA, PECA_2, NOPECA, PECA_2, NOPECA, PECA_2, NOPECA, PECA_2, NOPECA}
 		};
 //		this.estado = new int[][]{
-//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
-//                        {NOPECA, NOPECA, PECA_1, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
-//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
-//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
+//                        {NOPECA, PECA_1, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
+//                        {NOPECA, NOPECA, NOPECA, NOPECA, PECA_1, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
 //                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
 //                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
+//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, PECA_1, NOPECA, NOPECA, NOPECA, NOPECA},
 //                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
-//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
-//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA},
-//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA}
+//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, PECA_1, NOPECA, NOPECA},
+//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, PECA_2, NOPECA},
+//                        {NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, PECA_2},
+//                        {PECA_2, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA, NOPECA}
 //		};
 	}
 	
@@ -253,7 +261,7 @@ public class EstadoDamas extends Estado {
 			}
 		}
 		
-		EstadoDamas novoEstado = new EstadoDamas();
+		EstadoDamas novoEstado = new EstadoDamas(new int[]{xNovo, yNovo});
 		if(this.getJogador() == JOGADOR_1){
 			novoEstado.setJogador(JOGADOR_2);
 		}else{
@@ -261,20 +269,20 @@ public class EstadoDamas extends Estado {
 		}
 		int[][] damas = new int[LENGTH_X][LENGTH_Y];
 		for(int i = 0; i < damas.length; i++){
-			for(int j = 0; j < damas[i].length; j++){
-				damas[i][j] = this.estado[i][j];
-			}
+                    for(int j = 0; j < damas[i].length; j++){
+                            damas[i][j] = this.estado[i][j];
+                    }
 		}
 		novoEstado.setDamas(damas);
 		novoEstado.setDama(xNovo, yNovo, peca);
 		novoEstado.setDama(x, y, NOPECA);
                 
 		if(yAntigo >= 0){
-			novoEstado.setDama(xAntigo, yAntigo, NOPECA);
-                        int[] temp = new int[2];
-                        temp[0] = xNovo;
-                        temp[1] = yNovo;
-                        Tabuleiro.comeu = temp;
+                    novoEstado.setDama(xAntigo, yAntigo, NOPECA);
+                    int[] temp = new int[2];
+                    temp[0] = xNovo;
+                    temp[1] = yNovo;
+                    Tabuleiro.comeu = temp;
 		}
 		return novoEstado;
 	}
@@ -386,7 +394,7 @@ public class EstadoDamas extends Estado {
 	}
         public int[] hasPecaComer(int[] pos){
             int i = pos[0], j = pos[1];
-            System.out.println("isPermitido i " + i + " j " + j);
+//            System.out.println("getDama x " + i + " y " + j);
                 if(this.getDama(i, j) == PECA_1 || this.getDama(i, j) == DAMA_1){
                     try{
                         // pra baixo esquerda, tem peca do adversario, e nao tem proxima peca
@@ -503,6 +511,14 @@ public class EstadoDamas extends Estado {
         System.out.println();
     }
 
+        public int[] getPecaPai() {
+            return pecaPai;
+        }
+
+        public void setPecaPai(int[] pecaPai) {
+            this.pecaPai = pecaPai;
+        }
+        
 	public int getJogador() {
 		return jogador;
 	}

@@ -169,7 +169,7 @@ public class Tabuleiro extends Frame {
                 System.exit(0);
             }
             damas = (EstadoDamas) nodo.getEstado();
-
+            
             Lista l = p.gerarFilhos(nodo);
             if(l.vazia()){
                 JOptionPane.showMessageDialog(this, "Voce perdeu", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
@@ -182,16 +182,59 @@ public class Tabuleiro extends Frame {
         }
         
         public EstadoDamas rejogaCPU(int qntAntes, int qntDepois, EstadoDamas damas, int humano){
+            
+            System.out.println("rejogaCPU qntAntes " + qntAntes 
+                    + " qntDepois " + qntDepois 
+                    + " pai " + damas.getPecaPai()[0]
+                    + "," + damas.getPecaPai()[1]
+                    + " hasPecaComer " + damas.hasPecaComer(damas.getPecaPai())[0] 
+                    + "," + damas.hasPecaComer(damas.getPecaPai())[1]
+                    + " comeu " + comeu[0]
+                    + "," + comeu[1]
+                    + " jogador " + damas.getJogador());
+            
+            
+            int[] pai = damas.getPecaPai();
+            int[] pecaAComer = damas.hasPecaComer(pai);
+
             //Verifica se jogador Humano perdeu uma peca
-            if (qntDepois < qntAntes && damas.hasPecaComer(comeu)[0] != -1){
+            if (qntDepois < qntAntes && pecaAComer[0] != -1){
                 //Setar jogador como contrario do humano
-                damas.setJogador(humano == 1 ? 2 : 1);
-                damas = jogadaCPU(damas);
+                damas.setJogador(humano==1?2:1);
+                
+                try{
+                    damas = damas.movimento(pai[0], pai[1], pecaAComer[0], pecaAComer[1]);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                
+                Problema p = new ProblemaDamas();
+                p.setNodoInicial(damas);
+                ResolvedorDeProblemas r = new ResolvedorDeProblemas();
+                r.MINIMAX_NIVEL = nivel;
+                Nodo nodo = r.maxInicial(p);
+                if(nodo == null){
+                    JOptionPane.showMessageDialog(this, "Voce perdeu", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
+                    System.exit(0);
+                }
+                Lista l = p.gerarFilhos(nodo);
+                if(l.vazia()){
+                    JOptionPane.showMessageDialog(this, "Voce ganhou", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
+                    System.exit(0);
+                }
+                
+                damas = rejogaCPU(qntDepois, damas.contaPecas(damas.getJogador(), damas.getDamas()), damas, humano);
+                
             } else {
                 Tabuleiro.comeu[0] = -1;
                 Tabuleiro.comeu[1] = -1;
+                System.out.println("Nok");
                 return damas;
             }
+            
+            
+            
+            System.out.println("Finalizei jogador atual " + damas.getJogador());
             return damas;
         }
 	
