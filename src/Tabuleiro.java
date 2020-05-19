@@ -97,7 +97,7 @@ public class Tabuleiro extends Frame {
                             
                             damas = damas.movimento(yOld, xOld, y, x);
                             
-                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes &&  damas.hasPecaComer(comeu)){
+                            if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes &&  damas.hasPecaComer(comeu)[0] != -1){
 //                                System.out.println("comeu peça" + temp[0] + "" + temp[1]);
                                 //Coloca jogador da proximo jagada como humano
 //                                damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
@@ -175,14 +175,22 @@ public class Tabuleiro extends Frame {
                 JOptionPane.showMessageDialog(this, "Voce perdeu", "Fim de jogo", JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }
-                
+            
+            damas = rejogaCPU(qntAntes, damas.contaPecas(humano, damas.getDamas()), damas, humano);
+            
+            return damas;
+        }
+        
+        public EstadoDamas rejogaCPU(int qntAntes, int qntDepois, EstadoDamas damas, int humano){
             //Verifica se jogador Humano perdeu uma peca
-            if (damas.contaPecas(humano, damas.getDamas()) < qntAntes && damas.hasPecaComer(comeu)){
-                damas.setJogador(damas.getJogador() == 1 ? 2 : 1);
+            if (qntDepois < qntAntes && damas.hasPecaComer(comeu)[0] != -1){
+                //Setar jogador como contrario do humano
+                damas.setJogador(humano == 1 ? 2 : 1);
                 damas = jogadaCPU(damas);
             } else {
                 Tabuleiro.comeu[0] = -1;
                 Tabuleiro.comeu[1] = -1;
+                return damas;
             }
             return damas;
         }

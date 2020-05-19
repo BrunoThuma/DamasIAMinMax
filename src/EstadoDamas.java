@@ -384,34 +384,34 @@ public class EstadoDamas extends Estado {
 		}
 		return false;
 	}
-        public boolean hasPecaComer(int[] pos){
+        public int[] hasPecaComer(int[] pos){
             int i = pos[0], j = pos[1];
-            System.out.println("perimtdio" + i + " " + j + " " + this.isPermitido(i, j));
+            System.out.println("isPermitido i " + i + " j " + j);
                 if(this.getDama(i, j) == PECA_1 || this.getDama(i, j) == DAMA_1){
                     try{
                         // pra baixo esquerda, tem peca do adversario, e nao tem proxima peca
                         if((this.getDama(i-1, j+1) == PECA_2 || this.getDama(i-1, j+1) == DAMA_2) && this.getDama(i-2, j+2) == NOPECA){
-                                return true;
+                                return new int[] {i-1, j+1};
                         }
                     }catch(Exception exc){
                         System.out.println("lol");}
                     try{
                         // pra baixo direita, tem peca do adversario, e nao tem proxima peca
                         if((this.getDama(i+1, j+1) == PECA_2 || this.getDama(i+1, j+1) == DAMA_2) && this.getDama(i+2, j+2) == NOPECA){
-                                return true;
+                                return new int[] {i+1, j+1};
                         }
                     }catch(Exception exc){}
                     if(this.getDama(i, j) == DAMA_1){
                         try{
                             // pra cima esquerda, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i-1, j-1) == PECA_2 || this.getDama(i-1, j-1) == DAMA_2) && this.getDama(i-2, j-2) == NOPECA){
-                                    return true;
+                                    return new int[] {i-1, j-1};
                             }
                         }catch(Exception exc){System.out.println("lol1");}
                         try{
                             // pra cima direita, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i+1, j-1) == PECA_2 || this.getDama(i+1, j-1) == DAMA_2) && this.getDama(i+2, j-2) == NOPECA){
-                                    return true;
+                                    return new int[] {i+1, j-1};
                             }
                         }catch(Exception exc){System.out.println("lol2");}
                     }
@@ -419,32 +419,32 @@ public class EstadoDamas extends Estado {
                     try{
                             // pra cima esquerda, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i-1, j-1) == PECA_1 || this.getDama(i-1, j-1) == DAMA_1) && this.getDama(i-2, j-2) == NOPECA){
-                                    return true;
+                                    return new int[] {i-1, j-1};
                             }
                     }catch(Exception exc){System.out.println("lol3");}
                     try{
                             // pra cima direita, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i+1, j-1) == PECA_1 || this.getDama(i+1, j-1) == DAMA_1) && this.getDama(i+2, j-2) == NOPECA){
-                                    return true;
+                                    return new int[] {i+1, j+1};
                             }
                     }catch(Exception exc){System.out.println("lol4");}
                     if(this.getDama(i, j) == DAMA_2){
                         try{
                             // pra baixo esquerda, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i-1, j+1) == PECA_1 || this.getDama(i-1, j+1) == DAMA_1) && this.getDama(i-2, j+2) == NOPECA){
-                                    return true;
+                                    return new int[] {i-1, j+1};
                             }
                         }catch(Exception exc){System.out.println("lol5");}
                         try{
                             // pra baixo direita, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i+1, j+1) == PECA_1 || this.getDama(i+1, j+1) == DAMA_1) && this.getDama(i+2, j+2) == NOPECA){
-                                    return true;
+                                    return new int[] {i+1, j+1};
                             }
                         }catch(Exception exc){System.out.println("lol6");}
                     }
                 
             }
-            return false;
+            return new int[] {-1, -1};
 	}
 
 	public int[] calculaNumVantagem(){

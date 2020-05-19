@@ -59,11 +59,11 @@ public class ProblemaDamas implements Problema {
 				temp = e.novosMovimento(i, j);
 				for (EstadoDamas tempEstado : temp) {
 					if(tempEstado != null){
-						novoNodo = new Nodo() ;
-		                novoNodo.setEstado(tempEstado) ;
-		                novoNodo.setPai(nodo) ;
-		                novoNodo.setProfundidade(nodo.getProfundidade() + 1) ;
-		                filhos.inserir(novoNodo) ;
+                                            novoNodo = new Nodo() ;
+                                            novoNodo.setEstado(tempEstado) ;
+                                            novoNodo.setPai(nodo) ;
+                                            novoNodo.setProfundidade(nodo.getProfundidade() + 1) ;
+                                            filhos.inserir(novoNodo) ;
 					}
 				}
 			}
