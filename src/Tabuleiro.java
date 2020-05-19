@@ -108,6 +108,7 @@ public class Tabuleiro extends Frame {
                             if (damas.contaPecas(jIA, damas.getDamas()) < qntAntes &&  damas.hasPecaComer(comeu)/*fakeHasPecaComer*/){
 //                                System.out.println("comeu peça" + temp[0] + "" + temp[1]);
                                 for(int i=0; i < damas.getDamas()[0].length; i++) {
+                                    System.out.println("");
                                     for (int j = 0; j < damas.getDamas()[0].length; j++) {
                                         System.out.print(damas.getDama(j, i));
                                     }
