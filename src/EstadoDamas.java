@@ -4,10 +4,11 @@ import java.util.ArrayList;
 public class EstadoDamas extends Estado {
 	private int jogador;
 	private int[][] estado;
-        private int[] comeu;
 	static final int LENGTH_X = 10;
 	static final int LENGTH_Y = 10;
+        
 	
+        public int[] comeu = new int[] {-1, -1};
 	public static final int JOGADOR_1 = 1;
 	public static final int JOGADOR_2 = 2;
 	public static final int PECA_1 = 1;
@@ -18,9 +19,6 @@ public class EstadoDamas extends Estado {
 	
 	public EstadoDamas() {
 		super();
-                this.comeu = new int[2];
-                this.comeu[0] = -1;
-                this.comeu[1] = -1;
 		this.estado = new int[LENGTH_X][LENGTH_Y];
 	}
 
@@ -248,7 +246,9 @@ public class EstadoDamas extends Estado {
 			if(this.getDama(xNovo, yNovo) != NOPECA){
 				throw new Exception("Jogada invalida, mais de uma peca consecutiva");
 			}
-                        System.out.println("Comeu Peca");
+//                        System.out.println("Comeu Peca");
+                        System.out.println("xnovo" + xNovo + "yNovo" + yNovo);
+                        
 		}
 		// transforma peca em damas
 		int peca = this.getDama(x, y);
@@ -285,8 +285,8 @@ public class EstadoDamas extends Estado {
                         int[] temp = new int[2];
                         temp[0] = xNovo;
                         temp[1] = yNovo;
-                        if (novoEstado.hasPecaComer(temp))
-                                novoEstado.setComeu(temp);
+                        System.out.println("tey" + temp[0] + "" + temp[1]);
+                        Tabuleiro.comeu = temp;
 		}
 		return novoEstado;
 	}
@@ -392,12 +392,13 @@ public class EstadoDamas extends Estado {
 						}
 					}
 				}
-			}
+			} 
 		}
 		return false;
 	}
         public boolean hasPecaComer(int[] pos){
-            int i = pos[0], j = pos[1];
+            int i = pos[1], j = pos[0];
+            System.out.println("oi entrei na funcao de filho da puta haspecacomer e sou linha" + i + "coluna" + j);
             if(this.isPermitido(i, j)){
                 if(this.getDama(i, j) == PECA_1 || this.getDama(i, j) == DAMA_1){
                     try{
@@ -405,7 +406,8 @@ public class EstadoDamas extends Estado {
                         if((this.getDama(i-1, j+1) == PECA_2 || this.getDama(i-1, j+1) == DAMA_2) && this.getDama(i-2, j+2) == NOPECA){
                                 return true;
                         }
-                    }catch(Exception exc){}
+                    }catch(Exception exc){
+                        System.out.println("lol");}
                     try{
                         // pra baixo direita, tem peca do adversario, e nao tem proxima peca
                         if((this.getDama(i+1, j+1) == PECA_2 || this.getDama(i+1, j+1) == DAMA_2) && this.getDama(i+2, j+2) == NOPECA){
@@ -418,13 +420,13 @@ public class EstadoDamas extends Estado {
                             if((this.getDama(i-1, j-1) == PECA_2 || this.getDama(i-1, j-1) == DAMA_2) && this.getDama(i-2, j-2) == NOPECA){
                                     return true;
                             }
-                        }catch(Exception exc){}
+                        }catch(Exception exc){System.out.println("lol1");}
                         try{
                             // pra cima direita, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i+1, j-1) == PECA_2 || this.getDama(i+1, j-1) == DAMA_2) && this.getDama(i+2, j-2) == NOPECA){
                                     return true;
                             }
-                        }catch(Exception exc){}
+                        }catch(Exception exc){System.out.println("lol2");}
                     }
                 }else if(this.getDama(i, j) == PECA_2 || this.getDama(i, j) == DAMA_2){
                     try{
@@ -432,26 +434,26 @@ public class EstadoDamas extends Estado {
                             if((this.getDama(i-1, j-1) == PECA_1 || this.getDama(i-1, j-1) == DAMA_1) && this.getDama(i-2, j-2) == NOPECA){
                                     return true;
                             }
-                    }catch(Exception exc){}
+                    }catch(Exception exc){System.out.println("lol3");}
                     try{
                             // pra cima direita, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i+1, j-1) == PECA_1 || this.getDama(i+1, j-1) == DAMA_1) && this.getDama(i+2, j-2) == NOPECA){
                                     return true;
                             }
-                    }catch(Exception exc){}
+                    }catch(Exception exc){System.out.println("lol4");}
                     if(this.getDama(i, j) == DAMA_2){
                         try{
                             // pra baixo esquerda, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i-1, j+1) == PECA_1 || this.getDama(i-1, j+1) == DAMA_1) && this.getDama(i-2, j+2) == NOPECA){
                                     return true;
                             }
-                        }catch(Exception exc){}
+                        }catch(Exception exc){System.out.println("lol5");}
                         try{
                             // pra baixo direita, tem peca do adversario, e nao tem proxima peca
                             if((this.getDama(i+1, j+1) == PECA_1 || this.getDama(i+1, j+1) == DAMA_1) && this.getDama(i+2, j+2) == NOPECA){
                                     return true;
                             }
-                        }catch(Exception exc){}
+                        }catch(Exception exc){System.out.println("lol6");}
                     }
                 }
             }
