@@ -247,7 +247,6 @@ public class EstadoDamas extends Estado {
 				throw new Exception("Jogada invalida, mais de uma peca consecutiva");
 			}
 //                        System.out.println("Comeu Peca");
-                        System.out.println("xnovo" + xNovo + "yNovo" + yNovo);
                         
 		}
 		// transforma peca em damas
@@ -285,7 +284,6 @@ public class EstadoDamas extends Estado {
                         int[] temp = new int[2];
                         temp[0] = xNovo;
                         temp[1] = yNovo;
-                        System.out.println("tey" + temp[0] + "" + temp[1]);
                         Tabuleiro.comeu = temp;
 		}
 		return novoEstado;
@@ -397,9 +395,8 @@ public class EstadoDamas extends Estado {
 		return false;
 	}
         public boolean hasPecaComer(int[] pos){
-            int i = pos[1], j = pos[0];
-            System.out.println("oi entrei na funcao de filho da puta haspecacomer e sou linha" + i + "coluna" + j);
-            if(this.isPermitido(i, j)){
+            int i = pos[0], j = pos[1];
+            System.out.println("perimtdio" + i + " " + j + " " + this.isPermitido(i, j));
                 if(this.getDama(i, j) == PECA_1 || this.getDama(i, j) == DAMA_1){
                     try{
                         // pra baixo esquerda, tem peca do adversario, e nao tem proxima peca
@@ -455,7 +452,7 @@ public class EstadoDamas extends Estado {
                             }
                         }catch(Exception exc){System.out.println("lol6");}
                     }
-                }
+                
             }
             return false;
 	}
