@@ -228,7 +228,6 @@ public class Tabuleiro extends Frame {
             } else {
                 Tabuleiro.comeu[0] = -1;
                 Tabuleiro.comeu[1] = -1;
-                System.out.println("Nok");
                 return damas;
             }
             
